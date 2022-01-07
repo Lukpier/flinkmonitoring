@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	c "github.com/Lukpier/goflink-exception-alerting/config"
+	c "github.com/Lukpier/flinkmonitoring/config"
 	mail "github.com/xhit/go-simple-mail/v2"
 )
 

@@ -3,7 +3,7 @@ package monitoring
 import (
 	"encoding/json"
 	"fmt"
-	c "github.com/Lukpier/goflink-exception-alerting/config"
+	c "github.com/Lukpier/flinkmonitoring/config"
 	"log"
 )
 

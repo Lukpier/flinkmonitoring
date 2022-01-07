@@ -1,4 +1,4 @@
-module github.com/Lukpier/goflink-exception-alerting
+module github.com/Lukpier/flinkmonitoring
 
 go 1.17
 

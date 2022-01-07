@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	c "github.com/Lukpier/goflink-exception-alerting/config"
-	"github.com/Lukpier/goflink-exception-alerting/monitoring"
+	c "github.com/Lukpier/flinkmonitoring/config"
+	"github.com/Lukpier/flinkmonitoring/monitoring"
 	"github.com/spf13/viper"
 	"log"
 	"time"
