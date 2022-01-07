@@ -1,0 +1,12 @@
+poll: 5 # seconds
+for: 15 # seconds
+
+mail:
+  sender: ""
+  password: ""
+  receivers:
+  smtphost: "smtp.gmail.com"
+  smtpport: "587"
+
+flink:
+  endpoint: http://localhost:8081
