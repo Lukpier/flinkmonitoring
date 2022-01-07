@@ -28,6 +28,10 @@ func (el *ExceptionLookuper) LookupAllAndSend() error {
 		log.Fatal("cannot lookup for jobs")
 	}
 
+	if len(jobs.Jobs) == 0 {
+		log.Fatal("No Flink job running!")
+	}
+
 	for _, job := range jobs.Jobs {
 		if err := el.LookupJobAndSend(*job.Id); err != nil {
 			return err
@@ -38,33 +42,24 @@ func (el *ExceptionLookuper) LookupAllAndSend() error {
 }
 
 func (el *ExceptionLookuper) LookupJobAndSend(jobId string) error {
-	jobs, err := el.flinkClient.GetJobs()
+
+	exceptions, err := el.flinkClient.LookupExceptions(jobId)
 
 	if err != nil {
-		log.Fatal("cannot lookup for jobs")
+		fmt.Printf("cannot lookup for exceptions for job %s", jobId)
+		return err
 	}
 
-	for _, job := range jobs.Jobs {
+	if len(exceptions.AllExceptions) > 0 {
+		fmt.Printf("Found exceptions for Job: %s", jobId)
+		formatted := formatExceptions(&exceptions)
 
-		exceptions, err := el.flinkClient.LookupExceptions(*job.Id)
-
-		if err != nil {
-			fmt.Printf("cannot lookup for exceptions for job %s", *job.Id)
+		if err := el.mailClient.SendMail(jobId, formatted); err != nil {
+			fmt.Println("Error sendimg mail", err)
 			return err
 		}
-
-		if len(exceptions.AllExceptions) > 0 {
-			fmt.Printf("Found exceptions for Job: %s", *job.Id)
-			formatted := formatExceptions(&exceptions)
-
-			if err := el.mailClient.SendMail(*job.Id, formatted); err != nil {
-				fmt.Println("Error sendimg mail", err)
-				return err
-			}
-		} else {
-			fmt.Println("No exceptions for Job: ", *job.Id)
-		}
-
+	} else {
+		fmt.Println("No exceptions for Job: ", jobId)
 	}
 
 	return nil

@@ -1,12 +1,13 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	c "github.com/Lukpier/flinkmonitoring/config"
 	"github.com/Lukpier/flinkmonitoring/monitoring"
+	"github.com/akamensky/argparse"
 	"github.com/spf13/viper"
 	"log"
+	"os"
 	"time"
 )
 
@@ -32,10 +33,18 @@ func loadConfig(configPath string) c.Config {
 
 func main() {
 
-	configPath := *flag.String("config", "./config.yml", "path to the config file")
-	jobId := *flag.String("job", "", "specific job to follow")
+	parser := argparse.NewParser("flinkmonitoring", "Listens for exceptions of all / specified flink jobs and send them to the specified receiver address")
+	configPath := parser.String("c", "config", &argparse.Options{Required: true, Help: "path to config file"})
+	jobId := parser.String("j", "jobid", &argparse.Options{Required: false, Default: "", Help: "optional job id"})
 
-	config := loadConfig(configPath)
+	err := parser.Parse(os.Args)
+	if err != nil {
+		// In case of error print error and print usage
+		// This can also be done by passing -h or --help flags
+		log.Fatal(parser.Usage(err))
+	}
+
+	config := loadConfig(*configPath)
 
 	lookuper := monitoring.NewExceptionLookuper(config)
 
@@ -52,8 +61,8 @@ func main() {
 				return
 			case <-ticker.C:
 				var err error
-				if jobId != "" {
-					err = lookuper.LookupJobAndSend(jobId)
+				if *jobId != "" {
+					err = lookuper.LookupJobAndSend(*jobId)
 				} else {
 					err = lookuper.LookupAllAndSend()
 				}
