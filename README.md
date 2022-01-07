@@ -9,7 +9,18 @@ Flink exceptions alerting made simple (with go!).
 
 ## Usage
 
-`flinkmonitoring -config $CONFIG_PATH -job $JOBID <optional>`
+```
+usage: flinkmonitoring [-h|--help] -c|--config "<value>" [-j|--jobid "<value>"]
+
+                       Listens for exceptions of all / specified flink jobs and
+                       send them to the specified receiver address
+
+Arguments:
+
+  -h  --help    Print help information
+  -c  --config  path to config file
+  -j  --jobid   optional job id. Default:
+```
 
 * Configure sender and receivers mail info in related config section.
 * Specify flink endpoint
