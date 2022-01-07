@@ -1,4 +1,4 @@
-# GOFLINK-EXCEPTION-ALERTING
+# Flink Monitoring
 
 Flink exceptions alerting made simple (with go!).
 
