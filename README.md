@@ -1,6 +1,7 @@
 # Flink Monitoring
 
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/Lukpier/flinkmonitoring?style=flat-square)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/Lukpier/flinkmonitoring?style=for-the-badge)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Lukpier/flinkmonitoring/Go?style=for-the-badge)
 
 Flink exceptions alerting made simple (with go!).
 
