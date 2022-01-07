@@ -34,7 +34,7 @@ flink:
   endpoint: http://localhost:8081
 ```
 
-# Run with Docker
-`docker build --tag flinkmonitoring .`
-`docker run --network=host -v  $PWD/config.yml:/app/config.yml flinkmonitoring -config config.yml`
+## Run with Docker
+*`docker build --tag flinkmonitoring .`
+*`docker run --network=host -v  $PWD/config.yml:/app/config.yml flinkmonitoring -config config.yml`
 
