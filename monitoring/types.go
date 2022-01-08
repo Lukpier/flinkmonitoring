@@ -19,6 +19,16 @@ type Job struct {
 	Status *JobStatus `json:"status,omitempty"`
 }
 
+type JobDetailsInfo struct {
+	// Id corresponds to the JSON schema field "id".
+	Id *string `json:"id,omitempty"`
+
+	// Status corresponds to the JSON schema field "status".
+	Properties struct {
+		State *JobStatus `json:"state,omitempty"`
+	} `json:"properties"`
+}
+
 // UnmarshalJSON implements json.Unmarshaler.
 func (j *JobStatus) UnmarshalJSON(b []byte) error {
 	var v string
@@ -150,5 +160,6 @@ type IMailClient interface {
 
 type IFlinkClient interface {
 	GetJobs() (Jobs, error)
+	GetJob(id string) (JobDetailsInfo, error)
 	LookupExceptions(jobId string) (FlinkExceptions, error)
 }

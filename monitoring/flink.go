@@ -39,6 +39,22 @@ func (fc *FlinkClient) GetJobs() (Jobs, error) {
 	return data, nil
 }
 
+func (fc *FlinkClient) GetJob(id string) (JobDetailsInfo, error) {
+	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/jobs/%s", fc.endpoint, id), nil)
+	res, err := fc.client.Do(req)
+
+	body, err := ioutil.ReadAll(res.Body)
+
+	if err != nil {
+		log.Fatalf("Error requesting Flink jobs")
+		return JobDetailsInfo{}, err
+	}
+
+	var data JobDetailsInfo
+	json.Unmarshal(body, &data)
+	return data, nil
+}
+
 func (fc *FlinkClient) LookupExceptions(jobId string) (FlinkExceptions, error) {
 	req, _ := http.NewRequest("GET", fmt.Sprintf("%s/jobs/%s/exceptions", fc.endpoint, jobId), nil)
 	res, err := fc.client.Do(req)
