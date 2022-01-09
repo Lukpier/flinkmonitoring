@@ -31,7 +31,7 @@ Arguments:
 
 ## Config
 
-```
+```yaml
 poll: 5 # seconds
 for: 15 # seconds
 
