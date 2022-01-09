@@ -3,8 +3,10 @@ package monitoring
 import (
 	"encoding/json"
 	"fmt"
-	c "github.com/Lukpier/flinkmonitoring/config"
 	"log"
+	"sync"
+
+	c "github.com/Lukpier/flinkmonitoring/config"
 )
 
 type ExceptionLookuper struct {
@@ -32,11 +34,12 @@ func (el *ExceptionLookuper) LookupAllAndSend() error {
 		log.Fatal("No Flink job running!")
 	}
 
+	wg := sync.WaitGroup{}
+	wg.Add(len(jobs.Jobs))
 	for _, job := range jobs.Jobs {
-		if err := el.lookupJobAndSend(*job.Id, *job.Status); err != nil {
-			return err
-		}
+		go el.lookupJobAndSend(*job.Id, *job.Status)
 	}
+	wg.Wait()
 
 	return nil
 }
