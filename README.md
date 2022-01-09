@@ -49,6 +49,6 @@ flink:
 ```
 
 ## Run with Docker
-*`docker build --tag flinkmonitoring .`
-*`docker run --network=host -v  $PWD/config.yml:/app/config.yml flinkmonitoring -config config.yml`
+* `docker build --tag flinkmonitoring .`
+* `docker run --network=host -v  $PWD/config.yml:/app/config.yml flinkmonitoring -config config.yml`
 
